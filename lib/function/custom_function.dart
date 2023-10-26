@@ -55,6 +55,7 @@ class CustomFunction {
           email: emailAddress,
           password: password,
         );
+        await firestore.collection("users").doc(credential.user!.uid).set({"emailAddress" :emailAddress , "Password": password});
         if (credential.user != null) {
           customDialogBox(context, "Sign Up Successfully",
               "The User With This Email: $emailAddress is Registered Successfully");
@@ -154,6 +155,7 @@ class CustomFunction {
         actions:  [
            InkWell(
             onTap: (){
+              //is method me doc id khud set horahi
                firestore.collection("users").add({"name": nameController.text ,"email": emailController.text});
             nameController.clear();
             emailController.clear();

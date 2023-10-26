@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/function/custom_function.dart';
+import 'package:smithackathon/screens/sign_up_screen.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textfieldwidget.dart';
+import 'package:smithackathon/widgets/textwidget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: (){
                   func.loginWithEmailAndPassword(context,emailController,passwordController);
               },
-              child: const CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Login", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100))
+              child: const CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Login", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100)),
+        
+       InkWell(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen(),));
+        },
+        child: const TextWidget(textMessage: "Do You Want To Create an account? Sign up", textColor: MyColors.blackColor, textSize: 20))
         ],
       ),
     );
