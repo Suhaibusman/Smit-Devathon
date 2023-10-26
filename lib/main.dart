@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
      debugShowCheckedModeBanner: false,
     
-      home:SignUpScreen(),
+      home:LoginScreen(),
     );
   }
 }

@@ -17,17 +17,6 @@ class _LoginScreenState extends State<LoginScreen> {
   CustomFunction func = CustomFunction();
     
   
-    loginWithEmailAndPassword(){
-      String emailAddress = emailController.text.toString().trim();
-       String password = passwordController.text.toString().trim();
-
-    if (emailAddress =="" || password =="") {
-
-      func.customDialogBox(context, "title", "message");
-    } else {
-      
-    }
-  }
   @override
 
 
@@ -41,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",),
             InkWell(
               onTap: (){
-                  loginWithEmailAndPassword();
+                  func.loginWithEmailAndPassword(context,emailController,passwordController);
               },
               child: const CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Login", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100))
         ],
