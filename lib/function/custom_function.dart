@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CustomFunction {
+  //FirebaseFirestore firestore = FirebaseFirestore.instance;
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future customDialogBox(context, String title, String message) async {
     return showDialog(
       context: context,
@@ -77,8 +82,8 @@ class CustomFunction {
         passwordController.clear();
         if (credential.user != null) {
           // customDialogBox(context, "Login Successfully", "Login Succesfull with $emailAddress");
-         
-         Navigator.popUntil(context, (route) => route.isFirst);
+
+          Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -93,13 +98,18 @@ class CustomFunction {
 
   signout(context) async {
     await FirebaseAuth.instance.signOut();
-Navigator.popUntil(context, (route) => route.isFirst);
- Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ));
+    Navigator.popUntil(context, (route) => route.isFirst);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ));
+  }
 
-
+  fecthData() async {
+    QuerySnapshot snapshot = await firestore.collection("users").get();
+    for (var doc in snapshot.docs) {
+      log(doc.data().toString());
+    }
   }
 }

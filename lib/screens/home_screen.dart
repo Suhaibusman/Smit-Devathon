@@ -24,6 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
         }, icon: const Icon(Icons.exit_to_app))
       ],
       ),
+      body: Column(
+        children: [
+          ElevatedButton(onPressed: (){
+            func.fecthData();
+          }, child: Text("Fetch"))
+        ],
+      ),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smithackathon/firebase_options.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
-import 'package:smithackathon/screens/sign_up_screen.dart';
+
 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
