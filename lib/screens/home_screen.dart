@@ -25,10 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(onPressed: (){
             func.fecthData();
-          }, child: Text("Fetch"))
+          }, child: const Text("Fetch")),
+             ElevatedButton(onPressed: (){
+              func.addUsertoFireBase(context);
+          }, child: const Text("Add User"))
         ],
       ),
     );

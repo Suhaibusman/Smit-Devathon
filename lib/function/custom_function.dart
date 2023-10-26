@@ -2,14 +2,23 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smithackathon/widgets/buttonwidget.dart';
+import 'package:smithackathon/widgets/textfieldwidget.dart';
 
 class CustomFunction {
   //FirebaseFirestore firestore = FirebaseFirestore.instance;
-final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Future customDialogBox(context, String title, String message) async {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  Future customDialogBox(
+    context,
+    String title,
+    String message,
+  ) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -106,10 +115,53 @@ final FirebaseFirestore firestore = FirebaseFirestore.instance;
         ));
   }
 
+  //for fetching whole data
   fecthData() async {
+    //querysnaphot me pora data ayegaa
     QuerySnapshot snapshot = await firestore.collection("users").get();
     for (var doc in snapshot.docs) {
       log(doc.data().toString());
     }
+  }
+
+  //for fetching specific data
+  fecthSpecificData() async {
+    //agr specific document pr run krenge to document snapshot me aayega sirf ek user ka data aayega
+    DocumentSnapshot snapshot =
+        await firestore.collection("users").doc("05NHGEjt1Jklkbd1Yl4h").get();
+
+    log(snapshot.toString());
+  }
+
+  addUsertoFireBase(context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Add User"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomTextField(
+              textFieldController: nameController,
+              hintText: "Name",
+            ),
+            CustomTextField(
+              textFieldController: emailController,
+              hintText: "Email Address",
+            ),
+          ],
+        ),
+        actions:  [
+           InkWell(
+            onTap: (){
+               firestore.collection("users").add({"name": nameController.text ,"email": emailController.text});
+            nameController.clear();
+            emailController.clear();
+            Navigator.pop(context);
+            },
+            child: const Center(child: CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Add", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100)))
+        ],
+      ),
+    );
   }
 }
