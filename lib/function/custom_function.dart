@@ -146,6 +146,8 @@ Future<Widget> fetchWholeData() async {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(onPressed: (){
+                     emailController.text=doc["emailAddress"];
+                               passController.text=doc["Password"];
                    updateData(context, doc);
                 }, icon: const Icon(Icons.edit)),
                  IconButton(onPressed: (){
@@ -249,13 +251,25 @@ updateData(context,doc){
     );
      
 }
-deleteData(context,doc){
-   firestore.collection('users').doc(doc.id).delete().then((value) => ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-      content: Text("${doc['name']} deleted Successfully"),
-      duration: const Duration(seconds: 2), // Adjust the duration as needed
+deleteData(context, doc) async {
+  try {
+    await firestore.collection('users').doc(doc.id).delete();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${doc['name']} deleted Successfully"),
+        duration: const Duration(seconds: 2),
       ),
-    ));
+    );
+  } catch (e) {
+    // Handle any errors that occur during the delete operation
+    print(e);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text("An error occurred while deleting the document."),
+    //     duration: Duration(seconds: 2),
+    //   ),
+    // );
+  }
 }
 
 }
