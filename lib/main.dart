@@ -1,9 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smithackathon/firebase_options.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
+import 'package:smithackathon/provider/theme/theme_constant.dart';
+import 'package:smithackathon/provider/theme/theme_provider.dart';
+
+
 
 
 void main() async {
@@ -17,13 +22,25 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-     debugShowCheckedModeBanner: false,
-    
-      home:(FirebaseAuth.instance.currentUser !=null )?const HomeScreen(): const LoginScreen(),
-    );
+   
+        return ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+          builder: (context, child) {
+            final provider =Provider.of<ThemeProvider>(context);
+            return MaterialApp(
+          
+            theme: provider.themeMode,
+       
+          
+            debugShowCheckedModeBanner: false,
+          home:(FirebaseAuth.instance.currentUser !=null )?const HomeScreen(): const LoginScreen(),
+          );
+          },
+        );
+      
+  
+  
   }
 }
