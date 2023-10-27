@@ -93,12 +93,12 @@ class CustomFunction {
         passwordController.clear();
         if (credential.user != null) {
           // customDialogBox(context, "Login Successfully", "Login Succesfull with $emailAddress");
-
+        
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) =>  HomeScreen(emailAddress: firestore.collection("users").id),
               ));
         }
       } on FirebaseAuthException catch (e) {
