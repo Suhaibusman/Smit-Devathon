@@ -1,7 +1,15 @@
+// ignore_for_file: avoid_print
+
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -13,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   CustomFunction func = CustomFunction();
-
+  File? profilePic;
 
   
   @override
@@ -22,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  Scaffold(
 
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+      
         title:  const Text("HomeScreen"),
       actions: [
         IconButton(onPressed: (){
@@ -39,6 +47,35 @@ class _HomeScreenState extends State<HomeScreen> {
 )
 
       ],
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            InkWell(
+              onTap: ()async{
+                  XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+             print("Image Selected");
+
+             if (selectedImage != null) {
+               File convertedFile =File(selectedImage.path);
+
+              //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
+               setState(() {
+                 profilePic=convertedFile;
+               });
+                print("Image Selected!");
+             } else {
+               print("No Image Selected!");
+             }
+              },
+              child: CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.grey,
+                backgroundImage: (profilePic != null) ?FileImage(profilePic!):null,
+              ),
+            )
+          ],
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
