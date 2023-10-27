@@ -29,10 +29,15 @@ class _HomeScreenState extends State<HomeScreen> {
           func.signout(context);
           
         }, icon: const Icon(Icons.exit_to_app)),
-       Consumer<ThemeProvider>(builder: (context, value, child) => Switch(value: provider.themeMode ==ThemeMode.dark, onChanged: (newValue){
-          provider.toogleTheme();
-        
-        }) ,)
+      Consumer<ThemeProvider>(
+  builder: (context, provider, child) => Switch(
+    value: provider.themeMode == ThemeData.dark(),
+    onChanged: (newValue) {
+      provider.toogleTheme();
+    },
+  ),
+)
+
       ],
       ),
       body: Column(
