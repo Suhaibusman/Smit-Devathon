@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:smithackathon/function/custom_function.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String emailAddress;
-  const HomeScreen({super.key, required this.emailAddress});
+
+  const HomeScreen({super.key,});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -11,13 +11,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   CustomFunction func = CustomFunction();
+
+
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
 
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:  Text(widget.emailAddress),
+        title:  const Text("HomeScreen"),
       actions: [
         IconButton(onPressed: (){
           func.signout(context);

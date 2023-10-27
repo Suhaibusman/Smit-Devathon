@@ -98,7 +98,7 @@ class CustomFunction {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>  HomeScreen(emailAddress: firestore.collection("users").id),
+                builder: (context) =>  const HomeScreen(),
               ));
         }
       } on FirebaseAuthException catch (e) {

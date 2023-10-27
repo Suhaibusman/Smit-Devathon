@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,32 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
      debugShowCheckedModeBanner: false,
-    home: (FirebaseAuth.instance.currentUser != null)
-    ? FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get(),
-        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              // Handle the error
-              return Text("Error: ${snapshot.error}");
-            }
-
-            if (snapshot.hasData) {
-              // Get the email address from the user's document
-              String userEmail = snapshot.data!["email"] ?? "No Email Found";
-
-              // Pass the email address to the HomeScreen
-              return HomeScreen(emailAddress: userEmail);
-            }
-          }
-
-          // Show a loading indicator while fetching the data
-          return CircularProgressIndicator();
-        },
-      )
-    : const LoginScreen(),
-
-      // home:(FirebaseAuth.instance.currentUser !=null )?const HomeScreen(): const LoginScreen(),
+    
+      home:(FirebaseAuth.instance.currentUser !=null )?const HomeScreen(): const LoginScreen(),
     );
   }
 }
