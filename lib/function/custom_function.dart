@@ -8,11 +8,12 @@ import 'package:smithackathon/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textfieldwidget.dart';
+import 'package:smithackathon/widgets/textwidget.dart';
 
 class CustomFunction {
   //FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  TextEditingController nameController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   Future customDialogBox(
     context,
@@ -120,9 +121,33 @@ class CustomFunction {
   fecthData() async {
     //querysnaphot me pora data ayegaa
     QuerySnapshot snapshot = await firestore.collection("users").get();
-    for (var doc in snapshot.docs) {
-      log(doc.data().toString());
-    }
+   for (var doc in snapshot.docs) {
+     log(doc.toString());
+   }
+  }
+Future<Widget> fetchWholeData() async {
+    //querysnaphot me pora data ayegaa
+   
+   return StreamBuilder<QuerySnapshot>(
+      stream: firestore.collection("users").snapshots(),
+      builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.active) {
+        if (snapshot.hasData && snapshot.data != null) {
+          return Expanded(child: ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+            return  ListTile(
+              title: TextWidget(textMessage: userMap["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
+              subtitle: TextWidget(textMessage: userMap["Password"], textColor: MyColors.blackColor, textSize: 15),
+            );
+          },));
+        } else {
+          const Center(child: Text("No Data Found"),);
+        }
+      }
+      return const Center(child: CircularProgressIndicator(),);
+    },);
   }
 
   //for fetching specific data
@@ -143,8 +168,9 @@ class CustomFunction {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomTextField(
-              textFieldController: nameController,
-              hintText: "Name",
+              textFieldController: passController,
+              hintText: "Password",
+              isPass: true,
             ),
             CustomTextField(
               textFieldController: emailController,
@@ -156,8 +182,8 @@ class CustomFunction {
            InkWell(
             onTap: (){
               //is method me doc id khud set horahi
-               firestore.collection("users").add({"name": nameController.text ,"email": emailController.text});
-            nameController.clear();
+               firestore.collection("users").add({"Password": passController.text ,"emailAddress": emailController.text});
+            passController.clear();
             emailController.clear();
             Navigator.pop(context);
             },
@@ -166,4 +192,7 @@ class CustomFunction {
       ),
     );
   }
+
+
+
 }

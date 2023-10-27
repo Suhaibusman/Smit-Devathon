@@ -32,7 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
           }, child: const Text("Fetch")),
              ElevatedButton(onPressed: (){
               func.addUsertoFireBase(context);
-          }, child: const Text("Add User"))
+             
+          }, child: const Text("Add User")),
+        FutureBuilder<Widget>(
+            future: func.fetchWholeData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return snapshot.data!;
+                } else {
+                  return const Center(child: Text("No Data Found"));
+                }
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ],
       ),
     );
