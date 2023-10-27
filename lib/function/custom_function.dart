@@ -72,7 +72,7 @@ class CustomFunction {
               "The account already exists for that email");
         }
       } catch (e) {
-        print(e);
+        customDialogBox(context, "Error", e.toString());
       }
     }
   }
@@ -136,10 +136,23 @@ Future<Widget> fetchWholeData() async {
           return Expanded(child: ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              // Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+           DocumentSnapshot doc = snapshot.data!.docs[index];
             return  ListTile(
-              title: TextWidget(textMessage: userMap["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
-              subtitle: TextWidget(textMessage: userMap["Password"], textColor: MyColors.blackColor, textSize: 15),
+              title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
+              subtitle: TextWidget(textMessage: doc["Password"], textColor: MyColors.blackColor, textSize: 15),
+            
+            trailing:  Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(onPressed: (){
+                   updateData(context, doc);
+                }, icon: const Icon(Icons.edit)),
+                 IconButton(onPressed: (){
+                deleteData(context, doc);
+                 }, icon: const Icon(Icons.delete))
+              ],
+            ),
             );
           },));
         } else {
@@ -193,6 +206,56 @@ Future<Widget> fetchWholeData() async {
     );
   }
 
-
+updateData(context,doc){
+  showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Update User"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomTextField(
+              textFieldController: passController,
+              hintText: "Password",
+              isPass: true,
+            ),
+            CustomTextField(
+              textFieldController: emailController,
+              hintText: "Email Address",
+            ),
+          ],
+        ),
+        actions:  [
+           InkWell(
+            onTap: ()async{
+              //is method me doc id khud set horahi
+              await  FirebaseFirestore.instance.collection('users').doc(doc.id).update({
+                'name': passController.text,
+                'emailAddress': emailController.text,
+                // Update other fields as well
+              }).then((value) {
+                customDialogBox(context, "Value Updated", "Document updated");
+                Navigator.pop(context); // Close the dialog
+              }).catchError((error) {
+                customDialogBox(context, "Error", "Error updating document: $error");
+              });
+            passController.clear();
+            emailController.clear();
+            Navigator.pop(context);
+            },
+            child: const Center(child: CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Add", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100)))
+        ],
+      ),
+    );
+     
+}
+deleteData(context,doc){
+   firestore.collection('users').doc(doc.id).delete().then((value) => ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+      content: Text("${doc['name']} deleted Successfully"),
+      duration: const Duration(seconds: 2), // Adjust the duration as needed
+      ),
+    ));
+}
 
 }
