@@ -134,52 +134,98 @@ return StreamBuilder<QuerySnapshot>(
     if (snapshot.connectionState == ConnectionState.active) {
       if (snapshot.hasData && snapshot.data != null) {
         return Expanded(
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => const SizedBox(height: 10,),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
                   //querysnaphot me pora data ayegaa
-List<File?> profilePics = List.generate(snapshot.data!.docs.length, (index) => null);
 
-              return ListTile(
-                leading: CircleAvatar(
-                  radius: 25,
-                  child: InkWell(
-                    onTap: () async {
-                      XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-                      print("Image Selected");
-
-                      if (selectedImage != null) {
-                        File convertedFile = File(selectedImage.path);
-
-                        setState(() {
-                          profilePics[index] = convertedFile; // Store the image at the specific index
-                        });
-                        print("Image Selected!");
-                      } else {
-                        print("No Image Selected!");
-                      }
-                    },
-                    child: CircleAvatar(
-                      radius: 25,
-                      backgroundColor: Colors.grey,
-                      backgroundImage: (profilePics[index] != null)
-                          ? FileImage(profilePics[index]!) // Display the image at the specific index
-                          : null,
-                    ),
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    children: [
+                      // ListTile(
+                        // leading: CircleAvatar(
+                        //   radius: 25,
+                        //    backgroundImage: NetworkImage(doc["picture"]),
+                        // ),
+                      //   subtitle: TextWidget(textMessage: doc["speciality"], textColor: MyColors.blackColor, textSize: 15),
+                      //   title: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                              CircleAvatar(
+                            radius: 25,
+                             backgroundImage: NetworkImage(doc["picture"]),
+                          ),
+                          const Row(
+                            children: [
+                              Icon(Icons.star_half_outlined ,color: MyColors.greenColor,),
+                              Text("4.8"),
+                            ],
+                          )
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 20),
+                          TextWidget(textMessage: doc["speciality"], textColor: MyColors.greyColor, textSize: 13),
+                          Row(
+                            children: [
+                              Container(height: 34,width: 103,
+                              decoration: BoxDecoration(
+                                  color: MyColors.greyColor.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+              
+                              child: const Center(child: Text("Appointment" , style: TextStyle(fontWeight: FontWeight.bold),)),
+                              ),
+                              const SizedBox(width: 10,),
+                               Container(height: 34,width: 34,
+                              decoration: BoxDecoration(
+                                  color: MyColors.greyColor.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+              
+                              child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
+                                const SizedBox(width: 10,),
+                            Container(height: 34,width: 34,
+                              decoration: BoxDecoration(
+                                  color: MyColors.greyColor.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+              
+                              child:  const Center(child: Icon(Icons.favorite ,color: MyColors.greyColor,),)),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
-                subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
               );
             },
           ),
         );
       } else {
-        return Center(child: Text("No Data Found"));
+        return const Center(child: Text("No Data Found"));
       }
     }
-    return Center(child: CircularProgressIndicator());
+    return const Center(child: CircularProgressIndicator());
   },
 );
 
@@ -358,7 +404,7 @@ doctorSignUpWithEmailAndPassword(context, emailController, passwordController,
           email: emailAddress,
           password: password,
         );
-        await firestore.collection("doctor").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password});
+        await firestore.collection("doctor").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password, "speciality": "Neuro Sergeon", "picture":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThbjNM_06b2xF7YKagZceiYY-wgoRYBbrYAQ&usqp=CAU"});
         if (credential.user != null) {
           customDialogBox(context, "Sign Up Successfully",
               "The User With This Email: $emailAddress is Registered Successfully");
