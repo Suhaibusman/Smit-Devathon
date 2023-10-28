@@ -19,8 +19,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
    TextEditingController passwordController = TextEditingController();
       TextEditingController userNameController = TextEditingController();
   CustomFunction func = CustomFunction();
-  String? isPatient;
-      String? isDoctor;
+  bool isSelected= false;
+    bool isDocSelected= false;
+        bool isPatientSelected= true;
+      String? checkValue;
 
       
   
@@ -87,26 +89,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",),
                  
           
-           Row(
-            mainAxisSize: MainAxisSize.min,
-             children: [
-                Radio( value: "radio value", 
-             groupValue: "group value", 
-             onChanged: (value){
-               print(value); //selected value
-             },
-            ),
-            const Text("Pateint"),
-              Radio( value: "radio value", 
-             groupValue: "group value", 
-             onChanged: (value){
-               print(value); //selected value
-             },
-            ),
-            const Text("Doctor"),
-             ],
-           ),
-                   const SizedBox(
+     Row(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    Radio(
+      value: true, // Assign true to one radio button and false to the other
+      groupValue: isSelected,
+      onChanged: (value) {
+        setState(() {
+          isSelected = value!;
+          print("No dOCTOR value $value");
+          checkValue ="patient";
+          // print(value);
+        });
+      },
+    ),
+    const Text("Patient"),
+    Radio(
+      value: false, // Assign the opposite value for the other radio button
+      groupValue: isSelected,
+      onChanged: (value) {
+        setState(() {
+          isSelected = value!;
+           checkValue ="doctor";
+          print("No Patient value $value");
+        });
+      },
+    ),
+    const Text("Doctor"),
+  ],
+),       const SizedBox(
                 height: 20,
               ),
                    Image.asset(Myimages.orLine),
@@ -117,7 +129,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 InkWell(
                   onTap: (){
                       // loginWithEmailAndPassword();
+                if (checkValue =="doctor") {
+                func.customDialogBox(context, "Alert", "Do You Want to Signup as A Doctor");
+                } else {
                   func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
+                }
+                
+                  
                   // emailController.clear();
                   // passwordController.clear();
                   // confirmpasswordController.clear();

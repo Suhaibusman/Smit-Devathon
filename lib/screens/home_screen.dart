@@ -41,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
         
     //         title:  const Text("HomeScreen"),
     //       actions: [
-    //         IconButton(onPressed: (){
-    //           func.signout(context);
+            // IconButton(onPressed: (){
+            //   func.signout(context);
             
-    //         }, icon: const Icon(Icons.exit_to_app)),
+            // }, icon: const Icon(Icons.exit_to_app)),
     //       Consumer<ThemeProvider>(
     //   builder: (context, provider, child) => Switch(
     //     value: provider.themeMode == ThemeData.dark(),
@@ -104,7 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Image.asset(Myimages.drawerIcon),
+                         InkWell(
+                          onTap: (){
+                            func.signout(context);
+                          },
+                          child: Image.asset(Myimages.drawerIcon)),
                           InkWell(
                   onTap: ()async{
                       XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
