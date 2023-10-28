@@ -269,4 +269,44 @@ deleteData(context, doc) async {
   }
 }
 
+
+doctorSignUpWithEmailAndPassword(context, emailController, passwordController,
+      userNameController) async {
+    String emailAddress = emailController.text.toString().trim();
+    String password = passwordController.text.toString().trim();
+    String userName = userNameController.text.toString().trim();
+
+    if (emailAddress == "" || password == "" || userName == "") {
+      customDialogBox(context, "Sign up Error", "Please Fill All The Values");
+    }  else {
+      try {
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailAddress,
+          password: password,
+        );
+        await firestore.collection("doctor").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password});
+        if (credential.user != null) {
+          customDialogBox(context, "Sign Up Successfully",
+              "The User With This Email: $emailAddress is Registered Successfully");
+          emailController.clear();
+          passwordController.clear();
+          userNameController.clear();
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          customDialogBox(context, "Sign Up Error", "The Password is To Weak");
+        } else if (e.code == 'email-already-in-use') {
+          customDialogBox(context, "Sign Up Error",
+              "The account already exists for that email");
+        }
+      } catch (e) {
+        customDialogBox(context, "Error", e.toString());
+      }
+    }
+  }
+
+ 
+
+
 }

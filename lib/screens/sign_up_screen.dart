@@ -131,14 +131,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       // loginWithEmailAndPassword();
                 if (checkValue =="doctor") {
                 func.customDialogBox(context, "Alert", "Do You Want to Signup as A Doctor");
+                func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                 } else {
                   func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                 }
                 
                   
-                  // emailController.clear();
-                  // passwordController.clear();
-                  // confirmpasswordController.clear();
+              
                   },
                   child:  CustomButtonWidget(bgColor: MyColors.purpleColor, textMessage: "Create an Account", textColor: MyColors.whiteColor, textSize: 15, buttonWidth: MediaQuery.of(context).size.width))
           
