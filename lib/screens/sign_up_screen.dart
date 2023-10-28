@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   mainAxisSize: MainAxisSize.min,
   children: [
     Radio(
-      value: true, // Assign true to one radio button and false to the other
+      value: false, // Assign true to one radio button and false to the other
       groupValue: isSelected,
       onChanged: (value) {
         setState(() {
@@ -106,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ),
     const Text("Patient"),
     Radio(
-      value: false, // Assign the opposite value for the other radio button
+      value: true, // Assign the opposite value for the other radio button
       groupValue: isSelected,
       onChanged: (value) {
         setState(() {

@@ -29,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   CustomFunction func = CustomFunction();
   File? profilePic;
+  
+  var snapshot;
 
   
   @override
@@ -232,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                
           //   }, child: const Text("Toogle")),
           FutureBuilder<Widget>(
-              future: func.fetchWholeData(),
+              future: func.fetchWholeData(setState, profilePic,),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {

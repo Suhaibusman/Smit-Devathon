@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
@@ -122,45 +124,116 @@ class CustomFunction {
      log(doc.toString());
    }
   }
-Future<Widget> fetchWholeData() async {
-    //querysnaphot me pora data ayegaa
-   
-   return StreamBuilder<QuerySnapshot>(
-      stream: firestore.collection("doctor").snapshots(),
-      builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.active) {
-        if (snapshot.hasData && snapshot.data != null) {
-          return Expanded(child: ListView.builder(
+Future<Widget> fetchWholeData(setState,profilePic,) async {
+
+// ...
+
+return StreamBuilder<QuerySnapshot>(
+  stream: firestore.collection("doctor").snapshots(),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.active) {
+      if (snapshot.hasData && snapshot.data != null) {
+        return Expanded(
+          child: ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              // Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-           DocumentSnapshot doc = snapshot.data!.docs[index];
-            return  ListTile(
-              title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
-              subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
-            
-            trailing:  Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(onPressed: (){
-                     emailController.text=doc["emailAddress"];
-                               passController.text=doc["Password"];
-                   updateData(context, doc);
-                }, icon: const Icon(Icons.edit)),
-                 IconButton(onPressed: (){
-                deleteData(context, doc);
-                 }, icon: const Icon(Icons.delete))
-              ],
-            ),
-            );
-          },));
-        } else {
-          const Center(child: Text("No Data Found"),);
-        }
+              DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+List<File?> profilePics = List.generate(snapshot.data!.docs.length, (index) => null);
+
+              return ListTile(
+                leading: CircleAvatar(
+                  radius: 25,
+                  child: InkWell(
+                    onTap: () async {
+                      XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      print("Image Selected");
+
+                      if (selectedImage != null) {
+                        File convertedFile = File(selectedImage.path);
+
+                        setState(() {
+                          profilePics[index] = convertedFile; // Store the image at the specific index
+                        });
+                        print("Image Selected!");
+                      } else {
+                        print("No Image Selected!");
+                      }
+                    },
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.grey,
+                      backgroundImage: (profilePics[index] != null)
+                          ? FileImage(profilePics[index]!) // Display the image at the specific index
+                          : null,
+                    ),
+                  ),
+                ),
+                title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
+                subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
+              );
+            },
+          ),
+        );
+      } else {
+        return Center(child: Text("No Data Found"));
       }
-      return const Center(child: CircularProgressIndicator(),);
-    },);
-  }
+    }
+    return Center(child: CircularProgressIndicator());
+  },
+);
+
+}
+  //  return StreamBuilder<QuerySnapshot>(
+  //     stream: firestore.collection("doctor").snapshots(),
+  //     builder: (context, snapshot) {
+  //     if (snapshot.connectionState == ConnectionState.active) {
+  //       if (snapshot.hasData && snapshot.data != null) {
+  //         return Expanded(child: ListView.builder(
+  //           itemCount: snapshot.data!.docs.length,
+  //           itemBuilder: (context, index) {
+  //             // Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+  //          DocumentSnapshot doc = snapshot.data!.docs[index];
+  //           return  ListTile(
+  //             leading: CircleAvatar(
+  //               radius: 25,
+  //               child:     InkWell(
+  //                 onTap: ()async{
+  //                     XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //                print("Image Selected");
+                  
+  //                if (selectedImage != null) {
+  //                  File convertedFile =File(selectedImage.path);
+                  
+  //                 //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
+  //                  setState(() {
+  //                    profilePic=convertedFile;
+  //                  });
+  //                   print("Image Selected!");
+  //                } else {
+  //                  print("No Image Selected!");
+  //                }
+  //                 },
+  //                 child: CircleAvatar(
+  //                   radius: 25,
+  //                   backgroundColor: Colors.grey,
+  //                   backgroundImage: (profilePic != null) ?FileImage(profilePic!):null,
+  //                 ),
+  //               ),
+  //             ),
+  //             title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
+  //             subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
+            
+        
+  //           );
+  //         },));
+  //       } else {
+  //         const Center(child: Text("No Data Found"),);
+  //       }
+  //     }
+  //     return const Center(child: CircularProgressIndicator(),);
+  //   },);
+  // }
 
   //for fetching specific data
   fecthSpecificData() async {
