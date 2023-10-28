@@ -19,7 +19,17 @@ class _DentistScreenState extends State<DentistScreen> {
       child: Scaffold(
         body:  Column(
           children: [
-            FutureBuilder<Widget>(
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  IconButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, icon: const Icon(Icons.arrow_back)),
+                  SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                  const Center(child: Text("Dentist" ,style: TextStyle(fontSize: 18),))
+                ],
+              ),
+             FutureBuilder<Widget>(
                 future: func.fetchDentistData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
@@ -33,6 +43,7 @@ class _DentistScreenState extends State<DentistScreen> {
                   }
                 },
               ) ,
+          
           ],
         )
       ),

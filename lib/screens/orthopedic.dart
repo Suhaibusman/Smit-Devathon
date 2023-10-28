@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/function/custom_function.dart';
 
-class CardiologyScreen extends StatefulWidget {
-  const CardiologyScreen({super.key});
+class OrthoPedicScreen extends StatefulWidget {
+  const OrthoPedicScreen({super.key});
 
   @override
-  State<CardiologyScreen> createState() => _CardiologyScreenState();
+  State<OrthoPedicScreen> createState() => _OrthoPedicScreenState();
 }
 
-class _CardiologyScreenState extends State<CardiologyScreen> {
+class _OrthoPedicScreenState extends State<OrthoPedicScreen> {
    CustomFunction func = CustomFunction();
     File? profilePic;
   @override
@@ -26,11 +26,11 @@ class _CardiologyScreenState extends State<CardiologyScreen> {
                     Navigator.pop(context);
                   }, icon: const Icon(Icons.arrow_back)),
                   SizedBox(width: MediaQuery.of(context).size.width*0.2,),
-                  const Center(child: Text("Cardiology Doctor" ,style: TextStyle(fontSize: 18),))
+                  const Center(child: Text("Ortho Pedic Doctor" ,style: TextStyle(fontSize: 18),))
                 ],
               ),
             FutureBuilder<Widget>(
-                future: func.fetchCardiologyData(setState, profilePic,),
+                future: func.fetchOrthoPedicData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {

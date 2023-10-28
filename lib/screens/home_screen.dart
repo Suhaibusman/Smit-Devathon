@@ -14,6 +14,7 @@ import 'package:smithackathon/provider/theme/theme_provider.dart';
 import 'package:smithackathon/screens/all_doctors.dart';
 import 'package:smithackathon/screens/cardiology_screen.dart';
 import 'package:smithackathon/screens/dentist.dart';
+import 'package:smithackathon/screens/orthopedic.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
@@ -50,14 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   func.signout(context);
             
             // }, icon: const Icon(Icons.exit_to_app)),
-    //       Consumer<ThemeProvider>(
-    //   builder: (context, provider, child) => Switch(
-    //     value: provider.themeMode == ThemeData.dark(),
-    //     onChanged: (newValue) {
-    //       provider.toogleTheme();
-    //     },
-    //   ),
-    // )
+        
     
     //       ],
     //       ),
@@ -106,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+       
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -148,6 +143,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 20,
               ),
                   const TextWidget(textMessage: "Doctor's Inn", textColor: MyColors.whiteColor, textSize: 36)
+                  ,Row(
+                    children:  [
+                      Text("Dark Theme"),
+                                     Consumer<ThemeProvider>(
+      builder: (context, provider, child) => Switch(
+        value: provider.themeMode == ThemeData.dark(),
+        onChanged: (newValue) {
+          provider.toogleTheme();
+        },
+      ),
+     )
+                    ],
+                  )
+                
                   ],
                 ),
               ),
@@ -213,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               height: 60,
                                width: 60,
-                              child: Image.asset(Myimages.medicineIcon),
+                              child: Image.asset(Myimages.dentistIcon),
                             ),
                           ),
                           const Text("Dentist", style: TextStyle(color: MyColors.greyColor),)
@@ -221,16 +230,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                         Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: MyColors.whiteColor.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10)
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const OrthoPedicScreen(),));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: MyColors.whiteColor.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              height: 60,
+                               width: 60,
+                              child: Image.asset(Myimages.orthopedicIcon),
                             ),
-                            height: 60,
-                             width: 60,
-                            child: Image.asset(Myimages.generalIcon),
                           ),
-                          const Text("General", style: TextStyle(color: MyColors.greyColor),)
+                          const Text("OrthoPedic", style: TextStyle(color: MyColors.greyColor),)
                         ],
                       )
                     ],

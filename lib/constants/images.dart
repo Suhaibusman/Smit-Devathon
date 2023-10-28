@@ -8,4 +8,6 @@ class Myimages {
          static const String cardiologyIcon = "assets/images/cardiology.png";
             static const String generalIcon = "assets/images/general.png";
                static const String medicineIcon = "assets/images/medicine.png";
+                 static const String dentistIcon = "assets/images/dentist.png";
+                  static const String orthopedicIcon = "assets/images/orthopedic.png";
 }

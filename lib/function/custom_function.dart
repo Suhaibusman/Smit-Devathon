@@ -405,7 +405,7 @@ doctorSignUpWithEmailAndPassword(context, emailController, passwordController,
           email: emailAddress,
           password: password,
         );
-        await firestore.collection("doctor").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password, "speciality": "Neuro Sergeon", "picture":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThbjNM_06b2xF7YKagZceiYY-wgoRYBbrYAQ&usqp=CAU"});
+        await firestore.collection("doctor").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password, "speciality": "Ortho Pedic", "picture":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThbjNM_06b2xF7YKagZceiYY-wgoRYBbrYAQ&usqp=CAU"});
         if (credential.user != null) {
           customDialogBox(context, "Sign Up Successfully",
               "The User With This Email: $emailAddress is Registered Successfully");
@@ -532,12 +532,12 @@ return StreamBuilder<QuerySnapshot>(
 }
   //  return StreamBuilder<QuerySnapshot>(
  
- Future<Widget> fetchMedicineData(setState,profilePic,) async {
+ Future<Widget> fetchOrthoPedicData(setState,profilePic,) async {
 
 // ...
 
 return StreamBuilder<QuerySnapshot>(
-  stream: firestore.collection("doctor").where("speciality" ,isEqualTo: "cardiology").snapshots(),
+  stream: firestore.collection("doctor").where("speciality" ,isEqualTo: "Ortho Pedic").snapshots(),
   builder: (context, snapshot) {
     if (snapshot.connectionState == ConnectionState.active) {
       if (snapshot.hasData && snapshot.data != null) {
@@ -643,7 +643,7 @@ Future<Widget> fetchDentistData(setState,profilePic,) async {
 // ...
 
 return StreamBuilder<QuerySnapshot>(
-  stream: firestore.collection("doctor").where("speciality" ,isEqualTo: "dentist").snapshots(),
+  stream: firestore.collection("doctor").where("speciality" ,isEqualTo: "Dentist").snapshots(),
   builder: (context, snapshot) {
     if (snapshot.connectionState == ConnectionState.active) {
       if (snapshot.hasData && snapshot.data != null) {
