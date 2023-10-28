@@ -18,7 +18,7 @@ class CustomButtonWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         color: bgColor
       ),
-      height: 60,
+      height: 57,
       width: buttonWidth,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

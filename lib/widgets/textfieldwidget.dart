@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smithackathon/constants/colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController textFieldController;
@@ -15,8 +16,9 @@ class CustomTextField extends StatelessWidget {
       height: 60,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.white,
+        border: Border.all(color: MyColors.textFieldBorderColor),
+        // borderRadius: BorderRadius.circular(30),
+        color: MyColors.textFieldColor,
       ),
       child: TextField(
         controller: textFieldController,
@@ -24,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           suffixIcon: textFieldIcon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            // borderRadius: BorderRadius.circular(30),
           ),
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 15, fontWeight: FontWeight.bold),
