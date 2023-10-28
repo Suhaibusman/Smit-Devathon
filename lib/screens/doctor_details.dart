@@ -19,7 +19,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(left:20, right: 20),
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -140,7 +140,23 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                    TextWidget(textMessage: "About Doctor" ,textColor: MyColors.blackColor, textSize: 20),
                  ],
                ),
-                 TextWidget(textMessage: "${widget.username} is the top most ${widget.speciality} specialist in Nanyang Hospitalat London. She is available for private consultation." ,textColor: MyColors.blackColor, textSize: 20),
+                const SizedBox(height: 10,),
+                 TextWidget(textMessage: "${widget.username} is the top most ${widget.speciality} specialist in Nanyang Hospitalat London. She is available for private consultation." ,textColor: MyColors.greyColor, textSize: 15),
+                 const SizedBox(height: 10,),
+                 const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+                   TextWidget(textMessage: "Schedule Doctor" ,textColor: MyColors.blackColor, textSize: 20),
+                   TextWidget(textMessage: "October" ,textColor: MyColors.blackColor, textSize: 20),
+
+                 ],
+               ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TextWidget(textMessage: "Visit Hour" ,textColor: MyColors.blackColor, textSize: 20),
+                    ],
+                  ),
             ],
           ),
         ),
