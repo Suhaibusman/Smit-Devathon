@@ -19,20 +19,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
    TextEditingController passwordController = TextEditingController();
       TextEditingController confirmpasswordController = TextEditingController();
   CustomFunction func = CustomFunction();
-    
+  String? isPatient;
+      String? isDoctor;
 
       
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Padding(
-          padding: const EdgeInsets.all(40),
+          padding: const EdgeInsets.only(top: 10,bottom: 10,left: 40,right: 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
                             Column(
                 children: [
@@ -61,6 +63,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 5,
                   ),
                   CustomTextField(textFieldController: emailController ,hintText: "Username",),
+                   const SizedBox(
+                height: 20,
+              ),
                    const TextWidget(
                       textMessage: "Enter Email Address:",
                       textColor: MyColors.greyColor,
@@ -69,6 +74,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 5,
                   ),
                    CustomTextField(textFieldController: emailController ,hintText: "Enter Email",),
+                   const SizedBox(
+                height: 20,
+              ),
                    const TextWidget(
                       textMessage: "Enter Password:",
                       textColor: MyColors.greyColor,
@@ -77,6 +85,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 5,
                   ),
                 CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",),
+                 
+           Radio(
+  value: "radio value", 
+  groupValue: "group value", 
+  onChanged: (value){
+    print(value); //selected value
+  }
+),
+                   const SizedBox(
+                height: 20,
+              ),
+                   Image.asset(Myimages.orLine),
                  
                 ],
               ),
@@ -89,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // passwordController.clear();
                   // confirmpasswordController.clear();
                   },
-                  child: const CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Sign Up", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 150))
+                  child:  CustomButtonWidget(bgColor: MyColors.purpleColor, textMessage: "Create an Account", textColor: MyColors.whiteColor, textSize: 15, buttonWidth: MediaQuery.of(context).size.width))
           
            ,InkWell(
                   onTap: () {

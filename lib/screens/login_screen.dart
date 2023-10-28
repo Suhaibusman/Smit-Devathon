@@ -103,7 +103,7 @@ bool isPassword =true;
                       bgColor: MyColors.purpleColor,
                       textMessage: "Login",
                       textColor: MyColors.whiteColor,
-                      textSize: 30,
+                      textSize: 15,
                       buttonWidth: MediaQuery.of(context).size.width)),
               InkWell(
                   onTap: () {
