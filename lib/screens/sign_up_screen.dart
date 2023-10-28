@@ -17,7 +17,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
     TextEditingController emailController = TextEditingController();
    TextEditingController passwordController = TextEditingController();
-      TextEditingController confirmpasswordController = TextEditingController();
+      TextEditingController userNameController = TextEditingController();
   CustomFunction func = CustomFunction();
   String? isPatient;
       String? isDoctor;
@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  CustomTextField(textFieldController: emailController ,hintText: "Username",),
+                  CustomTextField(textFieldController: userNameController ,hintText: "Username",),
                    const SizedBox(
                 height: 20,
               ),
@@ -86,13 +86,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",),
                  
-           Radio(
-  value: "radio value", 
-  groupValue: "group value", 
-  onChanged: (value){
-    print(value); //selected value
-  }
-),
+          
+           Row(
+            mainAxisSize: MainAxisSize.min,
+             children: [
+                Radio( value: "radio value", 
+             groupValue: "group value", 
+             onChanged: (value){
+               print(value); //selected value
+             },
+            ),
+            const Text("Pateint"),
+              Radio( value: "radio value", 
+             groupValue: "group value", 
+             onChanged: (value){
+               print(value); //selected value
+             },
+            ),
+            const Text("Doctor"),
+             ],
+           ),
                    const SizedBox(
                 height: 20,
               ),
@@ -104,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 InkWell(
                   onTap: (){
                       // loginWithEmailAndPassword();
-                  func.signUpWithEmailAndPassword(context, emailController, passwordController, confirmpasswordController);
+                  func.signUpWithEmailAndPassword(context, emailController, passwordController, passwordController);
                   // emailController.clear();
                   // passwordController.clear();
                   // confirmpasswordController.clear();
