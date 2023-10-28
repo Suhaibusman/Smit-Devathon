@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
+import 'package:smithackathon/screens/doctor_details.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -143,78 +144,76 @@ return StreamBuilder<QuerySnapshot>(
 
               return Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: [
-                      // ListTile(
-                        // leading: CircleAvatar(
-                        //   radius: 25,
-                        //    backgroundImage: NetworkImage(doc["picture"]),
-                        // ),
-                      //   subtitle: TextWidget(textMessage: doc["speciality"], textColor: MyColors.blackColor, textSize: 15),
-                      //   title: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                              CircleAvatar(
-                            radius: 25,
-                             backgroundImage: NetworkImage(doc["picture"]),
+                child: InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetails(username: doc["username"], speciality: doc["speciality"], profileimages: doc["picture"]),));
+                    },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                CircleAvatar(
+                              radius: 25,
+                               backgroundImage: NetworkImage(doc["picture"]),
+                            ),
+                            const Row(
+                              children: [
+                                Icon(Icons.star_half_outlined ,color: MyColors.greenColor,),
+                                Text("4.8"),
+                              ],
+                            )
+                            ],
                           ),
-                          const Row(
-                            children: [
-                              Icon(Icons.star_half_outlined ,color: MyColors.greenColor,),
-                              Text("4.8"),
-                            ],
-                          )
-                          ],
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 20),
-                          TextWidget(textMessage: doc["speciality"], textColor: MyColors.greyColor, textSize: 13),
-                          Row(
-                            children: [
-                              Container(height: 34,width: 103,
-                              decoration: BoxDecoration(
-                                  color: MyColors.greyColor.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(10)
-                              ),
-              
-                              child: const Center(child: Text("Appointment" , style: TextStyle(fontWeight: FontWeight.bold),)),
-                              ),
-                              const SizedBox(width: 10,),
-                               Container(height: 34,width: 34,
-                              decoration: BoxDecoration(
-                                  color: MyColors.greyColor.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(10)
-                              ),
-              
-                              child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 20),
+                            TextWidget(textMessage: doc["speciality"], textColor: MyColors.greyColor, textSize: 13),
+                            Row(
+                              children: [
+                                Container(height: 34,width: 103,
+                                decoration: BoxDecoration(
+                                    color: MyColors.greyColor.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                              
+                                child: const Center(child: Text("Appointment" , style: TextStyle(fontWeight: FontWeight.bold),)),
+                                ),
                                 const SizedBox(width: 10,),
-                            Container(height: 34,width: 34,
-                              decoration: BoxDecoration(
-                                  color: MyColors.greyColor.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(10)
-                              ),
-              
-                              child:  const Center(child: Icon(Icons.favorite ,color: MyColors.greyColor,),)),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
+                                 Container(height: 34,width: 34,
+                                decoration: BoxDecoration(
+                                    color: MyColors.greyColor.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                              
+                                child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
+                                  const SizedBox(width: 10,),
+                              Container(height: 34,width: 34,
+                                decoration: BoxDecoration(
+                                    color: MyColors.greyColor.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                              
+                                child:  const Center(child: Icon(Icons.favorite ,color: MyColors.greyColor,),)),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );

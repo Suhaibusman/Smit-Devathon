@@ -11,6 +11,7 @@ import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
+import 'package:smithackathon/screens/all_doctors.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
@@ -160,14 +161,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: MyColors.whiteColor.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10)
+                          InkWell(
+                            onTap: (){
+
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllDoctors(),));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: MyColors.whiteColor.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              height: 60,
+                               width: 60,
+                              child: Image.asset(Myimages.allIcon),
                             ),
-                            height: 60,
-                             width: 60,
-                            child: Image.asset(Myimages.allIcon),
                           ),
                           const Text("all", style: TextStyle(color: MyColors.greyColor),)
                         ],
