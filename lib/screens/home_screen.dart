@@ -13,6 +13,7 @@ import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
 import 'package:smithackathon/screens/all_doctors.dart';
 import 'package:smithackathon/screens/cardiology_screen.dart';
+import 'package:smithackathon/screens/dentist.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
@@ -201,16 +202,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                         Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: MyColors.whiteColor.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(10)
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => DentistScreen(),));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: MyColors.whiteColor.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(10)
+                              ),
+                              height: 60,
+                               width: 60,
+                              child: Image.asset(Myimages.medicineIcon),
                             ),
-                            height: 60,
-                             width: 60,
-                            child: Image.asset(Myimages.medicineIcon),
                           ),
-                          const Text("Medicine", style: TextStyle(color: MyColors.greyColor),)
+                          const Text("Dentist", style: TextStyle(color: MyColors.greyColor),)
                         ],
                       ),
                         Column(

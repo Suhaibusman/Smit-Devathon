@@ -105,35 +105,27 @@ bool isPassword =true;
                       textColor: MyColors.whiteColor,
                       textSize: 15,
                       buttonWidth: MediaQuery.of(context).size.width)),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignUpScreen(),
-                        ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const TextWidget(
-                          textMessage: "Do You Want To Create an account? ",
-                          textColor: MyColors.textFieldBorderColor,
-                          textSize: 12),
-                      InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen(),
-                                ));
-                          },
-                          child: const TextWidget(
-                              textMessage: " Sign up",
-                              textColor: MyColors.blackColor,
-                              textSize: 12)),
-                    ],
-                  ))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const TextWidget(
+                      textMessage: "Do You Want To Create an account? ",
+                      textColor: MyColors.textFieldBorderColor,
+                      textSize: 12),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ));
+                      },
+                      child: const TextWidget(
+                          textMessage: " Sign up",
+                          textColor: MyColors.blackColor,
+                          textSize: 12)),
+                ],
+              )
             ],
           ),
         ),
