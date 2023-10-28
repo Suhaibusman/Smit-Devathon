@@ -10,5 +10,5 @@ class MyColors {
  static const Color textFieldBorderColor = Color( 0xffC8E3FF);
   static const Color textFieldColor = Color(0xffEDF8FF);
   static const Color greyColor = Color(0xff747474);
-  static const Color onBoardText2 = Color(0xffB2BBCE);
+  static const Color iconColor = Color(0xffC8E3FF);
 }

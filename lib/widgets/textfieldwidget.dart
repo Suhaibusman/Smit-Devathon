@@ -13,11 +13,11 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 50,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         border: Border.all(color: MyColors.textFieldBorderColor),
-        // borderRadius: BorderRadius.circular(30),
+         borderRadius: BorderRadius.circular(10),
         color: MyColors.textFieldColor,
       ),
       child: TextField(
@@ -25,8 +25,8 @@ class CustomTextField extends StatelessWidget {
         obscureText: isPass ?? false,
         decoration: InputDecoration(
           suffixIcon: textFieldIcon,
-          border: OutlineInputBorder(
-            // borderRadius: BorderRadius.circular(30),
+          border:  OutlineInputBorder(
+             borderRadius: BorderRadius.circular(10),
           ),
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 15, fontWeight: FontWeight.bold),

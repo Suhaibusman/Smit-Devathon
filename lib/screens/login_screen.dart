@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   
   Widget build(BuildContext context) {
     return  Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -42,15 +43,20 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20,),
                Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                  children: [
                    const TextWidget(textMessage: "Username:", textColor: MyColors.greyColor, textSize: 15),
-                   CustomTextField(textFieldController: emailController ,hintText: "Email Address",),
+                   const SizedBox(height: 5,),
+                   CustomTextField(textFieldController: emailController ,hintText: "Email Address",textFieldIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.person ) ,color: MyColors.iconColor,)),
+                  const SizedBox(height: 30,),
+                   const TextWidget(textMessage: "Password:", textColor: MyColors.greyColor, textSize: 15),
+                        const SizedBox(height: 5,),
+                    CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",textFieldIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.remove_red_eye ) ,color: MyColors.iconColor,)),
                  ],
                ),
-             
-              const SizedBox(height: 20,),
-                CustomTextField(textFieldController: passwordController ,isPass: true,hintText: "Password",),
-              const SizedBox(height: 20,),
+              
+               Image.asset(Myimages.orLine),
+        
                 InkWell(
                   onTap: (){
                       func.loginWithEmailAndPassword(context,emailController,passwordController);
@@ -61,7 +67,17 @@ class _LoginScreenState extends State<LoginScreen> {
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen(),));
             },
-            child: const TextWidget(textMessage: "Do You Want To Create an account? Sign up", textColor: MyColors.textFieldBorderColor, textSize: 18))
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const TextWidget(textMessage: "Do You Want To Create an account? ", textColor: MyColors.textFieldBorderColor, textSize: 12),
+                 InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen(),));
+                  },
+                  child: const TextWidget(textMessage: " Sign up", textColor: MyColors.blackColor, textSize: 12)),
+              ],
+            ))
             ],
           ),
         ),
