@@ -117,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 InkWell(
                   onTap: (){
                       // loginWithEmailAndPassword();
-                  func.signUpWithEmailAndPassword(context, emailController, passwordController, passwordController);
+                  func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                   // emailController.clear();
                   // passwordController.clear();
                   // confirmpasswordController.clear();

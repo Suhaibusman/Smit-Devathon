@@ -40,29 +40,27 @@ class CustomFunction {
   }
 
   signUpWithEmailAndPassword(context, emailController, passwordController,
-      confirmpasswordController) async {
+      userNameController) async {
     String emailAddress = emailController.text.toString().trim();
     String password = passwordController.text.toString().trim();
-    String confirmPassword = confirmpasswordController.text.toString().trim();
+    String userName = userNameController.text.toString().trim();
 
-    if (emailAddress == "" || password == "" || confirmPassword == "") {
+    if (emailAddress == "" || password == "" || userName == "") {
       customDialogBox(context, "Sign up Error", "Please Fill All The Values");
-    } else if (password != confirmPassword) {
-      customDialogBox(context, "Sign up Error", "Passwords do Not Matched");
-    } else {
+    }  else {
       try {
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailAddress,
           password: password,
         );
-        await firestore.collection("users").doc(credential.user!.uid).set({"emailAddress" :emailAddress , "Password": password});
+        await firestore.collection("users").doc(credential.user!.uid).set({"username":userName,"emailAddress" :emailAddress , "Password": password});
         if (credential.user != null) {
           customDialogBox(context, "Sign Up Successfully",
               "The User With This Email: $emailAddress is Registered Successfully");
           emailController.clear();
           passwordController.clear();
-          confirmpasswordController.clear();
+          userNameController.clear();
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -92,13 +90,12 @@ class CustomFunction {
         emailController.clear();
         passwordController.clear();
         if (credential.user != null) {
-          // customDialogBox(context, "Login Successfully", "Login Succesfull with $emailAddress");
-        
+      
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>  const HomeScreen(),
+                builder: (context) =>   HomeScreen(uid: credential.user!.uid),
               ));
         }
       } on FirebaseAuthException catch (e) {

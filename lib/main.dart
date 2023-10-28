@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
        
           
             debugShowCheckedModeBanner: false,
-          home:(FirebaseAuth.instance.currentUser !=null )?const HomeScreen(): const LoginScreen(),
+          home:(FirebaseAuth.instance.currentUser !=null )? HomeScreen(): const LoginScreen(),
           );
           },
         );
