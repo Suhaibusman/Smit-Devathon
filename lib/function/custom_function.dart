@@ -126,7 +126,7 @@ Future<Widget> fetchWholeData() async {
     //querysnaphot me pora data ayegaa
    
    return StreamBuilder<QuerySnapshot>(
-      stream: firestore.collection("users").snapshots(),
+      stream: firestore.collection("doctor").snapshots(),
       builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.active) {
         if (snapshot.hasData && snapshot.data != null) {
@@ -137,7 +137,7 @@ Future<Widget> fetchWholeData() async {
            DocumentSnapshot doc = snapshot.data!.docs[index];
             return  ListTile(
               title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
-              subtitle: TextWidget(textMessage: doc["Password"], textColor: MyColors.blackColor, textSize: 15),
+              subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
             
             trailing:  Row(
               mainAxisSize: MainAxisSize.min,

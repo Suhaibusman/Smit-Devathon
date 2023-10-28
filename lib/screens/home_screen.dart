@@ -231,20 +231,20 @@ class _HomeScreenState extends State<HomeScreen> {
           //     provider.toogleTheme();
                
           //   }, child: const Text("Toogle")),
-          // FutureBuilder<Widget>(
-          //     future: func.fetchWholeData(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.done) {
-          //         if (snapshot.hasData) {
-          //           return snapshot.data!;
-          //         } else {
-          //           return const Center(child: Text("No Data Found"));
-          //         }
-          //       } else {
-          //         return const Center(child: CircularProgressIndicator());
-          //       }
-          //     },
-          //   ),
+          FutureBuilder<Widget>(
+              future: func.fetchWholeData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return snapshot.data!;
+                  } else {
+                    return const Center(child: Text("No Data Found"));
+                  }
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
           ],
         ),
       ),
