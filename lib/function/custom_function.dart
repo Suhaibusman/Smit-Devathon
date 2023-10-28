@@ -600,13 +600,19 @@ return StreamBuilder<QuerySnapshot>(
                                 child: const Center(child: Text("Appointment" , style: TextStyle(fontWeight: FontWeight.bold),)),
                                 ),
                                 const SizedBox(width: 10,),
-                                 Container(height: 34,width: 34,
-                                decoration: BoxDecoration(
-                                    color: MyColors.greyColor.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                              
-                                child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
+                                 InkWell(
+                                  onTap: (){
+                                   showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now());
+
+                                  },
+                                   child: Container(height: 34,width: 34,
+                                                                 decoration: BoxDecoration(
+                                      color: MyColors.greyColor.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(10)
+                                                                 ),
+                                                               
+                                                                 child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
+                                 ),
                                   const SizedBox(width: 10,),
                               Container(height: 34,width: 34,
                                 decoration: BoxDecoration(

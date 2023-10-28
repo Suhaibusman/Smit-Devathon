@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smithackathon/constants/colors.dart';
+import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 class DoctorDetails extends StatefulWidget {
@@ -14,6 +15,7 @@ class DoctorDetails extends StatefulWidget {
 }
 
 class _DoctorDetailsState extends State<DoctorDetails> {
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -151,7 +153,16 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
                  ],
                ),
-                  const Row(
+
+                InkWell(
+                  onTap: (){
+                        showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now());
+                setState(() {
+                  
+                });
+                  },
+                  child: const CustomButtonWidget(bgColor: MyColors.purpleColor, textMessage: "FixAppointment", textColor: MyColors.whiteColor, textSize: 15, buttonWidth: 200))
+                 , const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TextWidget(textMessage: "Visit Hour" ,textColor: MyColors.blackColor, textSize: 20),
@@ -166,3 +177,4 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     );
   }
 }
+
