@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_local_variable
 // ignore_for_file: avoid_print
 
 import 'dart:io';
@@ -143,7 +143,77 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const TextWidget(textMessage: "Categories", textColor: MyColors.blackColor, textSize: 20),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextWidget(textMessage: "Categories", textColor: MyColors.blackColor, textSize: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: MyColors.whiteColor.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            height: 60,
+                             width: 60,
+                            child: Image.asset(Myimages.allIcon),
+                          ),
+                          const Text("all", style: TextStyle(color: MyColors.greyColor),)
+                        ],
+                      ),
+                        Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: MyColors.whiteColor.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            height: 60,
+                             width: 60,
+                            child: Image.asset(Myimages.cardiologyIcon),
+                          ),
+                          const Text("Cardiology", style: TextStyle(color: MyColors.greyColor),)
+                        ],
+                      ),
+                        Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: MyColors.whiteColor.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            height: 60,
+                             width: 60,
+                            child: Image.asset(Myimages.medicineIcon),
+                          ),
+                          const Text("Medicine", style: TextStyle(color: MyColors.greyColor),)
+                        ],
+                      ),
+                        Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: MyColors.whiteColor.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            height: 60,
+                             width: 60,
+                            child: Image.asset(Myimages.generalIcon),
+                          ),
+                          const Text("General", style: TextStyle(color: MyColors.greyColor),)
+                        ],
+                      )
+                    ],
+                  )
+                
+                ],
+              ),
+            ),
             
           //   ElevatedButton(onPressed: (){
           //     func.fecthData();
