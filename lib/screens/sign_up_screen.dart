@@ -1,14 +1,19 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
+
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textfieldwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
+
 
 // ... (imports and constants)
 
@@ -159,14 +164,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     
                if (selectedImage != null) {
                  File convertedFile =File(selectedImage.path);
-    
-                //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
+                  profilePic =convertedFile;
+                  // await FirebaseStorage.instance.ref().child("profilepictures").child(signupDoctorUid!).putFile(profilePic!);
                  setState(() {
                    profilePic=convertedFile;
                  });
                   print("Image Selected!");
                } else {
                  print("No Image Selected!");
+               profilePic = null;
                }
                 },
                 child: CircleAvatar(
@@ -191,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // Depending on checkValue, do different actions
                     if (checkValue == "doctor") {
                       func.customDialogBox(context, "Alert", "Do You Want to Signup as A Doctor");
-                      func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
+                      func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController,specialityController, profilePic);
                     } else {
                       func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                     }
