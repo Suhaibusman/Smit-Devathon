@@ -499,7 +499,7 @@ class CustomFunction {
           .collection("doctor")
           .where(
             "speciality",
-            isEqualTo: "cardiologist",
+            isEqualTo: "Cardiologist",
           )
           .snapshots(),
       builder: (context, snapshot) {
