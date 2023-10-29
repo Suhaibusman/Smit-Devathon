@@ -241,7 +241,7 @@ class CustomFunction {
                                         child: const Center(
                                           child: Icon(
                                             Icons.chat,
-                                            color: MyColors.greyColor,
+                                            color: MyColors.pinkColor,
                                           ),
                                         )),
                                     const SizedBox(
@@ -258,7 +258,7 @@ class CustomFunction {
                                         child: const Center(
                                           child: Icon(
                                             Icons.favorite,
-                                            color: MyColors.greyColor,
+                                            color: MyColors.pinkColor,
                                           ),
                                         )),
                                   ],
@@ -281,56 +281,7 @@ class CustomFunction {
       },
     );
   }
-  //  return StreamBuilder<QuerySnapshot>(
-  //     stream: firestore.collection("doctor").snapshots(),
-  //     builder: (context, snapshot) {
-  //     if (snapshot.connectionState == ConnectionState.active) {
-  //       if (snapshot.hasData && snapshot.data != null) {
-  //         return Expanded(child: ListView.builder(
-  //           itemCount: snapshot.data!.docs.length,
-  //           itemBuilder: (context, index) {
-  //             // Map <String,dynamic> userMap = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-  //          DocumentSnapshot doc = snapshot.data!.docs[index];
-  //           return  ListTile(
-  //             leading: CircleAvatar(
-  //               radius: 25,
-  //               child:     InkWell(
-  //                 onTap: ()async{
-  //                     XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //                print("Image Selected");
-
-  //                if (selectedImage != null) {
-  //                  File convertedFile =File(selectedImage.path);
-
-  //                 //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
-  //                  setState(() {
-  //                    profilePic=convertedFile;
-  //                  });
-  //                   print("Image Selected!");
-  //                } else {
-  //                  print("No Image Selected!");
-  //                }
-  //                 },
-  //                 child: CircleAvatar(
-  //                   radius: 25,
-  //                   backgroundColor: Colors.grey,
-  //                   backgroundImage: (profilePic != null) ?FileImage(profilePic!):null,
-  //                 ),
-  //               ),
-  //             ),
-  //             title: TextWidget(textMessage: doc["emailAddress"], textColor: MyColors.blackColor, textSize: 15),
-  //             subtitle: TextWidget(textMessage: doc["username"], textColor: MyColors.blackColor, textSize: 15),
-
-  //           );
-  //         },));
-  //       } else {
-  //         const Center(child: Text("No Data Found"),);
-  //       }
-  //     }
-  //     return const Center(child: CircularProgressIndicator(),);
-  //   },);
-  // }
-
+  
   //for fetching specific data
   fecthSpecificData() async {
     //agr specific document pr run krenge to document snapshot me aayega sirf ek user ka data aayega
@@ -681,7 +632,7 @@ class CustomFunction {
     return StreamBuilder<QuerySnapshot>(
       stream: firestore
           .collection("doctor")
-          .where("speciality", isEqualTo: "Ortho Pedic")
+          .where("speciality", isEqualTo: "Orthopedic")
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
@@ -775,8 +726,7 @@ class CustomFunction {
                                         height: 34,
                                         width: 34,
                                         decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                    255, 255, 116, 116)
+                                            color: MyColors.greyColor
                                                 .withOpacity(0.3),
                                             borderRadius:
                                                 BorderRadius.circular(10)),

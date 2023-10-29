@@ -154,7 +154,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
                  ],
                ),
-
+                const SizedBox(height: 20,),
                 InkWell(
                   onTap: (){
                          firestore.collection(widget.username).add({"Datetime": DateTime.now(), 
@@ -164,7 +164,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                  , const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      TextWidget(textMessage: "Visit Hour" ,textColor: MyColors.blackColor, textSize: 20),
+                      // TextWidget(textMessage: "Visit Hour" ,textColor: MyColors.blackColor, textSize: 20),
                     ],
                   ),
             ],
