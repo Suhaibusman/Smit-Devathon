@@ -36,6 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isPatientSelected = true;
   String? checkValue;
    final List<String> doctorFields = [
+    "Select Value",
     "Orthopedic",
     "Dentist",
     "Cardiologist",
@@ -48,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     "Obstetrician-Gynecologist",
   ];
 
-  String selectedDoctorField = "Orthopedic";
+  String selectedDoctorField = "Select Value";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

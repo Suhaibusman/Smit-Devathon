@@ -466,9 +466,13 @@ class CustomFunction {
     // String speciality = specialityController.text.toString().trim();
     if (emailAddress == "" ||
         password == "" ||
-        userName == "" ||
-        profilePic == null) {
+        userName == ""
+       ) {
       customDialogBox(context, "Sign up Error", "Please Fill All The Values");
+    }else if(selectedDoctorField == "Select Value"){
+          customDialogBox(context, "Sign up Error", "Please Select Your Specialiity");
+    }else if( profilePic == null){
+          customDialogBox(context, "Sign up Error", "Please Upload Your Image");
     } else {
       try {
         final credential =
@@ -501,6 +505,7 @@ class CustomFunction {
           emailController.clear();
           passwordController.clear();
           userNameController.clear();
+          selectedDoctorField = "Select Value";
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
