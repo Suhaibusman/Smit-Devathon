@@ -533,7 +533,7 @@ class CustomFunction {
     return StreamBuilder<QuerySnapshot>(
       stream: firestore
           .collection("doctor")
-          .where("speciality", isEqualTo: "cardiology" ,)
+          .where("speciality", isEqualTo: "cardiologist" ,)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {

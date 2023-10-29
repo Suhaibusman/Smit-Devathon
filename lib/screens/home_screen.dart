@@ -167,87 +167,198 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const TextWidget(textMessage: "Categories", textColor: MyColors.blackColor, textSize: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          InkWell(
-                            onTap: (){
-
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllDoctors(),));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: MyColors.whiteColor.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                              height: 60,
-                               width: 60,
-                              child: Image.asset(Myimages.allIcon),
-                            ),
-                          ),
-                          const Text("all", style: TextStyle(color: MyColors.greyColor),)
-                        ],
-                      ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Column(
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const CardiologyScreen(),));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: MyColors.whiteColor.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10)
+                          children: [
+                            InkWell(
+                              onTap: (){
+                  
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AllDoctors(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.allIcon),
                               ),
-                              height: 60,
-                               width: 60,
-                              child: Image.asset(Myimages.cardiologyIcon),
                             ),
-                          ),
-                          const Text("Cardiology", style: TextStyle(color: MyColors.greyColor),)
-                        ],
-                      ),
-                        Column(
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const DentistScreen(),));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: MyColors.whiteColor.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10)
+                            const Text("all", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                        const SizedBox(width: 20,),
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CardiologyScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.cardiologyIcon),
                               ),
-                              height: 60,
-                               width: 60,
-                              child: Image.asset(Myimages.dentistIcon),
                             ),
-                          ),
-                          const Text("Dentist", style: TextStyle(color: MyColors.greyColor),)
-                        ],
-                      ),
-                        Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const OrthoPedicScreen(),));
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: MyColors.whiteColor.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(10)
+                            const Text("Cardiology", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                             const SizedBox(width: 20,),
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DentistScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.dentistIcon),
                               ),
-                              height: 60,
-                               width: 60,
-                              child: Image.asset(Myimages.orthopedicIcon),
                             ),
-                          ),
-                          const Text("OrthoPedic", style: TextStyle(color: MyColors.greyColor),)
-                        ],
-                      )
-                    ],
+                            const Text("Dentist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                             const SizedBox(width: 20,),
+                          
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const OrthoPedicScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.orthopedicIcon),
+                              ),
+                            ),
+                            const Text("OrthoPedic", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        )
+                        ,const SizedBox(width: 20,),
+                    //iske bbd kam krna hee
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const CardiologyScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.dermotologistIcon),
+                              ),
+                            ),
+                            const Text("Dermotologist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                             const SizedBox(width: 20,),
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DentistScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.gastrologistIcon),
+                              ),
+                            ),
+                            const Text("Gastrologist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                             const SizedBox(width: 20,),
+                          
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const OrthoPedicScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.neurologistIcon),
+                              ),
+                            ),
+                            const Text("Neurologist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        )
+                        ,const SizedBox(width: 20,),
+                         Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DentistScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.psychatristIcon),
+                              ),
+                            ),
+                            const Text("Psychiatrist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        ),
+                             const SizedBox(width: 20,),
+                          
+                          Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const OrthoPedicScreen(),));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyColors.whiteColor.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                height: 60,
+                                 width: 60,
+                                child: Image.asset(Myimages.gyneIcon),
+                              ),
+                            ),
+                            const Text("Gynecologist", style: TextStyle(color: MyColors.greyColor),)
+                          ],
+                        )
+                        ,const SizedBox(width: 20,),
+                      ],
+                    ),
                   )
                 
                 ],
