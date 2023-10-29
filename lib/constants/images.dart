@@ -16,4 +16,5 @@ class Myimages {
   static const String neurologistIcon = "assets/images/neurologist.png";
   static const String dermotologistIcon = "assets/images/dermatologist.png";
   static const String gastrologistIcon = "assets/images/gastrologist.png";
+      static const String mypic  =  'assets/images/mypic.jpg';
 }

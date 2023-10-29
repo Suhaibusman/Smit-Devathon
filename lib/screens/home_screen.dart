@@ -39,6 +39,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   CustomFunction func = CustomFunction();
   File? profilePic;
 
@@ -49,37 +50,62 @@ class _HomeScreenState extends State<HomeScreen> {
     final provider = Provider.of<ThemeProvider>(context);
     return SafeArea(
       child: Scaffold(
+            key: _scaffoldKey,
+         drawer: Drawer(
+         child: ListView(
+          children: <Widget>[
+              UserAccountsDrawerHeader(
+              accountName: const Text('Muhammad Suhaib Usman'),
+              accountEmail: const Text('Suhaibusman54@gmail.com'),
+              currentAccountPicture:  CircleAvatar(
+  radius: 50,
+  backgroundColor: Colors.transparent, // Set the background color to transparent
+  child: ClipOval(
+    child: Image.asset(Myimages.mypic),
+  ),
+)
+            ),
+            const ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Contact Number'),
+              subtitle: Text('+92311-2136120'),
+            ),
+           Padding(
+             padding: const EdgeInsets.only(left :10 ,right :10),
+             child: Row(
+              mainAxisAlignment: 
+              MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Dark Theme" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
+                          Consumer<ThemeProvider>(
+                            builder: (context, provider, child) => Switch(
+                              value: provider.themeMode == ThemeData.dark(),
+                              onChanged: (newValue) {
+                                provider.toogleTheme();
+                              },
+                            ),
+                          ),
+                                ],
+                      ),
+           ),
+             Padding(
+             padding: const EdgeInsets.only(left :10 ,right :10),
+             child: Row(
+              mainAxisAlignment: 
+              MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text("Sign Out" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
+                            IconButton(onPressed: (){
+                              func.signout(context);
+                            }, icon: const Icon(Icons.logout))
+                        ],
+                      ),
+           )
+         
+                  
 
-        drawer: Drawer(
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () async {
-                  XFile? selectedImage = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  print("Image Selected");
-
-                  if (selectedImage != null) {
-                    File convertedFile = File(selectedImage.path);
-
-                    //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
-                    setState(() {
-                      profilePic = convertedFile;
-                    });
-                    print("Image Selected!");
-                  } else {
-                    print("No Image Selected!");
-                  }
-                },
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey,
-                  backgroundImage:
-                      (profilePic != null) ? FileImage(profilePic!) : null,
-                ),
-              )
-            ],
-          ),
+          ],
+        ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         InkWell(
                             onTap: () {
-                              func.signout(context);
+                            _scaffoldKey.currentState!.openDrawer();
+                              // func.signout(context);
                             },
                             child: Image.asset(Myimages.drawerIcon)),
                         InkWell(
@@ -112,10 +139,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             XFile? selectedImage = await ImagePicker()
                                 .pickImage(source: ImageSource.gallery);
                             print("Image Selected");
-
+                    
                             if (selectedImage != null) {
                               File convertedFile = File(selectedImage.path);
-
+                    
                               //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
                               setState(() {
                                 profilePic = convertedFile;
@@ -152,19 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         textMessage: "Doctor's Inn",
                         textColor: MyColors.whiteColor,
                         textSize: 36),
-                    Row(
-                      children: [
-                        const Text("Dark Theme"),
-                        Consumer<ThemeProvider>(
-                          builder: (context, provider, child) => Switch(
-                            value: provider.themeMode == ThemeData.dark(),
-                            onChanged: (newValue) {
-                              provider.toogleTheme();
-                            },
-                          ),
-                        )
-                      ],
-                    )
+                   
                   ],
                 ),
               ),
