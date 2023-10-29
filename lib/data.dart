@@ -1,3 +1,3 @@
-String? loginedUsername;
+String? currentloginedUsername;
 String? signupDoctorUid;
-
+String? currentname;

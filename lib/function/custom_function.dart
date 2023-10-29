@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, avoid_print
 
 import 'dart:developer';
 import 'dart:io';
@@ -101,12 +101,12 @@ class CustomFunction {
         emailController.clear();
         passwordController.clear();
         if (credential.user != null) {
-          loginedUsername = credential.user!.uid;
+          currentloginedUsername = credential.user!.uid;
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen(uid: credential.user!.uid),
+                builder: (context) => HomeScreen(uid: credential.user!.uid, loginedUsername: currentname ?? "back",),
               ));
         }
       } on FirebaseAuthException catch (e) {
@@ -290,6 +290,24 @@ class CustomFunction {
 
     log(snapshot.toString());
   }
+  fetchUserName() async {
+  DocumentSnapshot snapshot = await firestore.collection("users").doc(currentloginedUsername).get();
+  
+  if (snapshot.exists) {
+    // Access and store the user's data in variables
+    Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+
+    if (userData != null) {
+     return  currentname = userData["username"];
+      
+    } else {
+      print("User data is null.");
+    }
+  } else {
+    print("User document does not exist.");
+  }
+}
+
 
   addUsertoFireBase(context) {
     showDialog(

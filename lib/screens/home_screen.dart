@@ -11,7 +11,6 @@ import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
-
 import 'package:smithackathon/screens/categories/all_doctors.dart';
 import 'package:smithackathon/screens/categories/cardiology_screen.dart';
 import 'package:smithackathon/screens/categories/dentist.dart';
@@ -23,15 +22,16 @@ import 'package:smithackathon/screens/categories/opthalmogist.dart';
 import 'package:smithackathon/screens/categories/orthopedic.dart';
 import 'package:smithackathon/screens/categories/peditrician.dart';
 import 'package:smithackathon/screens/categories/psychiatrist.dart';
-
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
   String? uid;
+  String loginedUsername;
   HomeScreen({
     Key? key,
     this.uid,
+    required this.loginedUsername,
   }) : super(key: key);
 
   @override
@@ -42,24 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
   CustomFunction func = CustomFunction();
   File? profilePic;
 
-  var snapshot;
+
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ThemeProvider>(context);
     return SafeArea(
       child: Scaffold(
-        //       appBar: AppBar(
 
-        //         title:  const Text("HomeScreen"),
-        //       actions: [
-        // IconButton(onPressed: (){
-        //   func.signout(context);
-
-        // }, icon: const Icon(Icons.exit_to_app)),
-
-        //       ],
-        //       ),
         drawer: Drawer(
           child: Column(
             children: [
@@ -145,8 +135,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                    const TextWidget(
-                        textMessage: "Welcome Back",
+                     TextWidget(
+                        textMessage: "Welcome ${widget.loginedUsername}",
                         textColor: MyColors.whiteColor,
                         textSize: 15),
                     SizedBox(

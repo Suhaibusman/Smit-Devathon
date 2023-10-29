@@ -8,7 +8,8 @@ import 'package:smithackathon/widgets/textfieldwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+ 
+   const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
