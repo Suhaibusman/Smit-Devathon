@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const TextWidget(textMessage: "Doctor's Inn", textColor: MyColors.whiteColor, textSize: 36)
                   ,Row(
                     children:  [
-                      Text("Dark Theme"),
+                      const Text("Dark Theme"),
                                      Consumer<ThemeProvider>(
       builder: (context, provider, child) => Switch(
         value: provider.themeMode == ThemeData.dark(),
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => CardiologyScreen(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const CardiologyScreen(),));
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => DentistScreen(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const DentistScreen(),));
                             },
                             child: Container(
                               decoration: BoxDecoration(

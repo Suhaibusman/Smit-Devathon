@@ -361,6 +361,7 @@ updateData(context,doc){
               });
             passController.clear();
             emailController.clear();
+            // ignore: use_build_context_synchronously
             Navigator.pop(context);
             },
             child: const Center(child: CustomButtonWidget(bgColor: MyColors.blackColor, textMessage: "Add", textColor: MyColors.whiteColor, textSize: 30, buttonWidth: 100)))
