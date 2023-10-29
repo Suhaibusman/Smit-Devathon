@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/function/custom_function.dart';
@@ -22,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController userNameController = TextEditingController();
     TextEditingController specialityController = TextEditingController();
   CustomFunction func = CustomFunction();
+   File? profilePic;
   bool isSelected = false;
   bool isDocSelected = false;
   bool isPatientSelected = true;
@@ -148,7 +152,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           textColor: MyColors.greyColor,
                           textSize: 15),
                         ),
-                        IconButton(onPressed: (){}, icon: const Icon(Icons.image , size: 70,)),
+                          InkWell(
+                onTap: ()async{
+                    XFile? selectedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+               print("Image Selected");
+    
+               if (selectedImage != null) {
+                 File convertedFile =File(selectedImage.path);
+    
+                //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
+                 setState(() {
+                   profilePic=convertedFile;
+                 });
+                  print("Image Selected!");
+               } else {
+                 print("No Image Selected!");
+               }
+                },
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: (profilePic != null) ?FileImage(profilePic!):null,
+                ),
+              )
 
                       ],
                     ),
