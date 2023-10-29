@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
+import 'package:smithackathon/data.dart';
 import 'package:smithackathon/screens/doctor_details.dart';
 import 'package:smithackathon/screens/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
@@ -95,7 +96,7 @@ class CustomFunction {
         emailController.clear();
         passwordController.clear();
         if (credential.user != null) {
-      
+            loginedUsername = credential.user!.uid;
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(
               context,
@@ -600,19 +601,13 @@ return StreamBuilder<QuerySnapshot>(
                                 child: const Center(child: Text("Appointment" , style: TextStyle(fontWeight: FontWeight.bold),)),
                                 ),
                                 const SizedBox(width: 10,),
-                                 InkWell(
-                                  onTap: (){
-                                   showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now());
-
-                                  },
-                                   child: Container(height: 34,width: 34,
-                                                                 decoration: BoxDecoration(
-                                      color: MyColors.greyColor.withOpacity(0.3),
-                                      borderRadius: BorderRadius.circular(10)
-                                                                 ),
-                                                               
-                                                                 child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
-                                 ),
+                                 Container(height: 34,width: 34,
+                                                               decoration: BoxDecoration(
+                                    color: const Color.fromARGB(255, 255, 116, 116).withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(10)
+                                                               ),
+                                                             
+                                                               child: const Center(child: Icon(Icons.chat,color: MyColors.greyColor,),)),
                                   const SizedBox(width: 10,),
                               Container(height: 34,width: 34,
                                 decoration: BoxDecoration(
@@ -620,7 +615,7 @@ return StreamBuilder<QuerySnapshot>(
                                     borderRadius: BorderRadius.circular(10)
                                 ),
                               
-                                child:  const Center(child: Icon(Icons.favorite ,color: MyColors.greyColor,),)),
+                                child:   const Center(child: Icon(Icons.favorite ,color: MyColors.greyColor,),)),
                               ],
                             )
                           ],
