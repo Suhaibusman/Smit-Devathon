@@ -55,6 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
          child: ListView(
           children: <Widget>[
               UserAccountsDrawerHeader(
+                 decoration: const BoxDecoration(
+          color: MyColors.purpleColor, // Set the background color to purple
+        ),
               accountName: const Text('Muhammad Suhaib Usman'),
               accountEmail: const Text('Suhaibusman54@gmail.com'),
               currentAccountPicture:  CircleAvatar(

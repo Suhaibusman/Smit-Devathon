@@ -298,7 +298,7 @@ class CustomFunction {
     Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
 
     if (userData != null) {
-     return  currentname = userData["username"];
+       currentname = userData["username"];
       
     } else {
       print("User data is null.");
