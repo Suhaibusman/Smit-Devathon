@@ -459,15 +459,14 @@ class CustomFunction {
   }
 
   doctorSignUpWithEmailAndPassword(context, emailController, passwordController,
-      userNameController, specialityController, profilePic) async {
+      userNameController, selectedDoctorField, profilePic) async {
     String emailAddress = emailController.text.toString().trim();
     String password = passwordController.text.toString().trim();
     String userName = userNameController.text.toString().trim();
-    String speciality = specialityController.text.toString().trim();
+    // String speciality = specialityController.text.toString().trim();
     if (emailAddress == "" ||
         password == "" ||
         userName == "" ||
-        specialityController == "" ||
         profilePic == null) {
       customDialogBox(context, "Sign up Error", "Please Fill All The Values");
     } else {
@@ -491,7 +490,7 @@ class CustomFunction {
           "username": userName,
           "emailAddress": emailAddress,
           "Password": password,
-          "speciality": speciality,
+          "speciality": selectedDoctorField,
           "picture":
               downloadurl
         });
@@ -529,7 +528,7 @@ class CustomFunction {
     return StreamBuilder<QuerySnapshot>(
       stream: firestore
           .collection("doctor")
-          .where("speciality", isEqualTo: "cardiology")
+          .where("speciality", isEqualTo: "cardiology" ,)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {

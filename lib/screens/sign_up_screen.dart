@@ -28,14 +28,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
-    TextEditingController specialityController = TextEditingController();
+
   CustomFunction func = CustomFunction();
    File? profilePic;
   bool isSelected = false;
   bool isDocSelected = false;
   bool isPatientSelected = true;
   String? checkValue;
+   final List<String> doctorFields = [
+    "Orthopedic",
+    "Dentist",
+    "Cardiologist",
+    "Dermatologist",
+    "Gastroenterologist",
+    "Pediatrician",
+    "Ophthalmologist",
+    "Neurologist",
+    "Psychiatrist",
+    "Obstetrician-Gynecologist",
+  ];
 
+  String selectedDoctorField = "Orthopedic";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +155,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    CustomTextField(textFieldController: specialityController, hintText: "Enter Speciality",),
+
+                    DropdownButton<String>(
+                value: selectedDoctorField,
+                onChanged: ( newValue) {
+                  // When the user selects a new value from the dropdown, update the state.
+                  setState(() {
+                    selectedDoctorField = newValue!;
+                  });
+                },
+                items: doctorFields.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+              Text("Selected Doctor Field: $selectedDoctorField"),
+                    // CustomTextField(textFieldController: specialityController, hintText: "Enter Speciality",),
                     const SizedBox(
                       height: 20,
                     ),
@@ -197,7 +227,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // Depending on checkValue, do different actions
                     if (checkValue == "doctor") {
                       func.customDialogBox(context, "Alert", "Do You Want to Signup as A Doctor");
-                     await func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController,specialityController, profilePic);
+                     await func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController,selectedDoctorField, profilePic);
                     } else {
                       func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                     }
