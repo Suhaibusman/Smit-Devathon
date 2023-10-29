@@ -30,7 +30,7 @@ class _PeditriationScreenState extends State<PeditriationScreen> {
                 ],
               ),
             FutureBuilder<Widget>(
-                future: func.fetchCardiologyData(setState, profilePic,),
+                future: func.fetchPediatrcianData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {

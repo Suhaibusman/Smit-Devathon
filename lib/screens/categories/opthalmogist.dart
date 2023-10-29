@@ -30,7 +30,7 @@ class _OpthalmologistScreenState extends State<OpthalmologistScreen> {
                 ],
               ),
             FutureBuilder<Widget>(
-                future: func.fetchCardiologyData(setState, profilePic,),
+                future: func.fetchOptholomoogistData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {

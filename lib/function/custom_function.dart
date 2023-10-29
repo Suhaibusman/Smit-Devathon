@@ -464,15 +464,13 @@ class CustomFunction {
     String password = passwordController.text.toString().trim();
     String userName = userNameController.text.toString().trim();
     // String speciality = specialityController.text.toString().trim();
-    if (emailAddress == "" ||
-        password == "" ||
-        userName == ""
-       ) {
+    if (emailAddress == "" || password == "" || userName == "") {
       customDialogBox(context, "Sign up Error", "Please Fill All The Values");
-    }else if(selectedDoctorField == "Select Value"){
-          customDialogBox(context, "Sign up Error", "Please Select Your Specialiity");
-    }else if( profilePic == null){
-          customDialogBox(context, "Sign up Error", "Please Upload Your Image");
+    } else if (selectedDoctorField == "Select Value") {
+      customDialogBox(
+          context, "Sign up Error", "Please Select Your Specialiity");
+    } else if (profilePic == null) {
+      customDialogBox(context, "Sign up Error", "Please Upload Your Image");
     } else {
       try {
         final credential =
@@ -482,21 +480,20 @@ class CustomFunction {
         );
 
         signupDoctorUid = credential.user!.uid;
-       UploadTask uploadimage = FirebaseStorage.instance
+        UploadTask uploadimage = FirebaseStorage.instance
             .ref()
             .child("profilepictures")
             .child(credential.user!.uid)
             .putFile(profilePic!);
 
-           TaskSnapshot taskSnapshot = await uploadimage;
-      String downloadurl  =await taskSnapshot.ref.getDownloadURL();
+        TaskSnapshot taskSnapshot = await uploadimage;
+        String downloadurl = await taskSnapshot.ref.getDownloadURL();
         await firestore.collection("doctor").doc(credential.user!.uid).set({
           "username": userName,
           "emailAddress": emailAddress,
           "Password": password,
           "speciality": selectedDoctorField,
-          "picture":
-              downloadurl
+          "picture": downloadurl
         });
 
         if (credential.user != null) {
@@ -513,10 +510,8 @@ class CustomFunction {
         } else if (e.code == 'email-already-in-use') {
           customDialogBox(context, "Sign Up Error",
               "The account already exists for that email");
-        }
-        else{
-          customDialogBox(context, "Error",
-             e.code);
+        } else {
+          customDialogBox(context, "Error", e.code);
         }
       } catch (e) {
         customDialogBox(context, "Error", e.toString());
@@ -533,7 +528,10 @@ class CustomFunction {
     return StreamBuilder<QuerySnapshot>(
       stream: firestore
           .collection("doctor")
-          .where("speciality", isEqualTo: "cardiologist" ,)
+          .where(
+            "speciality",
+            isEqualTo: "cardiologist",
+          )
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
@@ -674,8 +672,6 @@ class CustomFunction {
       },
     );
   }
-  //  return StreamBuilder<QuerySnapshot>(
-
   Future<Widget> fetchOrthoPedicData(
     setState,
     profilePic,
@@ -827,14 +823,10 @@ class CustomFunction {
       },
     );
   }
-  //  return StreamBuilder<QuerySnapshot>(
-
   Future<Widget> fetchDentistData(
     setState,
     profilePic,
   ) async {
-// ...
-
     return StreamBuilder<QuerySnapshot>(
       stream: firestore
           .collection("doctor")
@@ -979,5 +971,1041 @@ class CustomFunction {
       },
     );
   }
-  //  return StreamBuilder<QuerySnapshot>(
+ Future<Widget> fetchNeuroLogistData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Neurologist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchPsychiatrististData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Psychiatrist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchGynecologistData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Obstetrician-Gynecologist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchOptholomoogistData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Ophthalmologist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchPediatrcianData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Pediatrician")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchGastrologistData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Gastroenterologist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+Future<Widget> fetchDermatologistData(
+    setState,
+    profilePic,
+  ) async {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("doctor")
+          .where("speciality", isEqualTo: "Dermatologist")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+                  //querysnaphot me pora data ayegaa
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DoctorDetails(
+                                  username: doc["username"],
+                                  speciality: doc["speciality"],
+                                  profileimages: doc["picture"]),
+                            ));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(doc["picture"]),
+                                  ),
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star_half_outlined,
+                                        color: MyColors.greenColor,
+                                      ),
+                                      Text("4.8"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextWidget(
+                                    textMessage: doc["username"],
+                                    textColor: MyColors.blackColor,
+                                    textSize: 20),
+                                TextWidget(
+                                    textMessage: doc["speciality"],
+                                    textColor: MyColors.greyColor,
+                                    textSize: 13),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 34,
+                                      width: 103,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.greyColor
+                                              .withOpacity(0.3),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: const Center(
+                                          child: Text(
+                                        "Appointment",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.chat,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                        height: 34,
+                                        width: 34,
+                                        decoration: BoxDecoration(
+                                            color: MyColors.greyColor
+                                                .withOpacity(0.3),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: MyColors.greyColor,
+                                          ),
+                                        )),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
 }

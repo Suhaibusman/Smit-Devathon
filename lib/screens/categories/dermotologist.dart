@@ -30,7 +30,7 @@ class _DermotologistScreenState extends State<DermotologistScreen> {
                 ],
               ),
             FutureBuilder<Widget>(
-                future: func.fetchCardiologyData(setState, profilePic,),
+                future: func.fetchDermatologistData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {

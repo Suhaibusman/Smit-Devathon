@@ -30,7 +30,7 @@ class _PsychiatristScreenState extends State<PsychiatristScreen> {
                 ],
               ),
             FutureBuilder<Widget>(
-                future: func.fetchCardiologyData(setState, profilePic,),
+                future: func.fetchPsychiatrististData(setState, profilePic,),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
