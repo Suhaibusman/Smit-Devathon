@@ -193,11 +193,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                  const SizedBox(height: 20,),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     // Depending on checkValue, do different actions
                     if (checkValue == "doctor") {
                       func.customDialogBox(context, "Alert", "Do You Want to Signup as A Doctor");
-                      func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController,specialityController, profilePic);
+                     await func.doctorSignUpWithEmailAndPassword(context, emailController, passwordController, userNameController,specialityController, profilePic);
                     } else {
                       func.signUpWithEmailAndPassword(context, emailController, passwordController, userNameController);
                     }

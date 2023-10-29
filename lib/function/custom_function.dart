@@ -468,7 +468,7 @@ class CustomFunction {
         password == "" ||
         userName == "" ||
         specialityController == "" ||
-        profilePic == "") {
+        profilePic == null) {
       customDialogBox(context, "Sign up Error", "Please Fill All The Values");
     } else {
       try {
@@ -509,6 +509,10 @@ class CustomFunction {
         } else if (e.code == 'email-already-in-use') {
           customDialogBox(context, "Sign Up Error",
               "The account already exists for that email");
+        }
+        else{
+          customDialogBox(context, "Error",
+             e.code);
         }
       } catch (e) {
         customDialogBox(context, "Error", e.toString());
